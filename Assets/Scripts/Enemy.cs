@@ -56,7 +56,7 @@ public class Enemy : MonoBehaviour
         Debug.Log("Player has been killed!");
 
         // Disable player controls (example)
-        Shooter shooter = FindObjectOfType<Shooter>(); // Find the Shooter script in the scene
+        ShootMode shooter = FindObjectOfType<ShootMode>(); // Find the Shooter script in the scene
         if (shooter != null)
         {
             shooter.enabled = false; // Disable the shooting ability

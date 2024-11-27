@@ -99,7 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1
-  growthRate: 1.5
+  growthRate: 0.1
   maxScaleMultiplier: 2
 --- !u!58 &6726878530309298105
 CircleCollider2D:
