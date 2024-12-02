@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //NOTES
-//This code requires asstes in game to function properly.
+//This code requires assets in game to function properly.
 //This code also requires Ink to function and the Ink add-on in Unity.
 //For context, it helps with dialogue.
 //To download Ink, go to https://www.inklestudios.com/ink/
@@ -16,33 +16,40 @@ public class DialogueTrigger : MonoBehaviour
     [Header("Ink JSON")]
     [SerializeField] private TextAsset inkJSON;
 
-    private bool playerInRange;
+    [Header("Trigger Area Settings")]
+    [SerializeField] private float triggerRadius = 2f;  // Radius to trigger dialogue when cursor is close
 
-    private void Awake(){
-        playerInRange = false;
+    private bool cursorInRange;
+
+    private void Awake()
+    {
+        cursorInRange = false;
         visualCue.SetActive(false);
     }
 
-    private void Update(){
-        if(playerInRange && !DialogueManager.GetInstance().dialogueisPlaying){
+    private void Update()
+    {
+        // Get the cursor position in world space
+        Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        // Check if the cursor is within the trigger radius of the object
+        float distanceToObject = Vector2.Distance(cursorPosition, transform.position);
+
+        if (distanceToObject <= triggerRadius && !DialogueManager.GetInstance().dialogueisPlaying)
+        {
+            cursorInRange = true;
             visualCue.SetActive(true);
-            if (Input.GetKeyDown(KeyCode.E)){
+
+            // Trigger dialogue when left mouse button is clicked
+            if (Input.GetMouseButtonDown(0))  // 0 corresponds to the left mouse button
+            {
                 DialogueManager.GetInstance().EnterDialogueMode(inkJSON);
             }
-        } else {
+        }
+        else
+        {
+            cursorInRange = false;
             visualCue.SetActive(false);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D collider) {
-        if (collider.gameObject.tag == "Player"){
-            playerInRange = true;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collider){
-        if (collider.gameObject.tag == "Player"){
-            playerInRange = false;
         }
     }
 }
