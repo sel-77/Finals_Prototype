@@ -1,1 +1,1 @@
-﻿There was a HOLE here. It's gone now.
+﻿aThere was a HOLE here. It's gone now.

@@ -41,7 +41,8 @@ public class DialogueManager : MonoBehaviour
     private void Start()
     {
         dialogueisPlaying = false;
-        dialoguePanel.SetActive(false);
+        dialoguePanel.SetActive(true);
+        dialogueText.text = "";
     }
 
     private void Update()
@@ -59,19 +60,20 @@ public class DialogueManager : MonoBehaviour
 
     public void EnterDialogueMode(TextAsset inkJSON)
     {
+        Debug.Log("Entering Dialogue Mode");
         currentStory = new Story(inkJSON.text);
         dialogueisPlaying = true;
-        dialoguePanel.SetActive(true);
-
         ContinueStory();
     }
 
+
     private void ExitDialogueMode()
     {
+        Debug.Log("Exiting Dialogue Mode");
         dialogueisPlaying = false;
-        dialoguePanel.SetActive(false);
         dialogueText.text = "";
     }
+
 
     private void ContinueStory()
     {
@@ -88,8 +90,7 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator TypewriterEffect(string line)
     {
-        dialogueText.text = ""; // Clear the text at the beginning
-
+        dialogueText.text = "";
         foreach (char letter in line.ToCharArray())
         {
             dialogueText.text += letter; // Add one letter at a time
