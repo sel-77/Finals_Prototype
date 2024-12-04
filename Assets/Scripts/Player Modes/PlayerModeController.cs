@@ -16,6 +16,9 @@ public class PlayerModeController : MonoBehaviour
     private ShootMode shooter;
     private InteractMode interactor;
 
+    private Vector3 originalScale; // Store the original scale of the crosshair
+    private bool isShooting = false; // Prevent overlapping animations
+
     void Start()
     {
         shooter = GetComponent<ShootMode>();
@@ -23,6 +26,8 @@ public class PlayerModeController : MonoBehaviour
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Confined;
+
+        originalScale = shootCrosshair.transform.localScale;
 
         UpdateMode();
     }
