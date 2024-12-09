@@ -23,6 +23,7 @@ public class DialogueManager : MonoBehaviour
     private static DialogueManager instance;
 
     public bool dialogueisPlaying { get; private set; }
+    private bool isTyping = false;
 
     private void Awake()
     {
@@ -77,8 +78,10 @@ public class DialogueManager : MonoBehaviour
 
     private void ContinueStory()
     {
+        if (isTyping) return;
         if (currentStory.canContinue)
         {
+            StopAllCoroutines();
             // Start the typewriter effect
             StartCoroutine(TypewriterEffect(currentStory.Continue()));
         }
@@ -90,11 +93,13 @@ public class DialogueManager : MonoBehaviour
 
     private IEnumerator TypewriterEffect(string line)
     {
+        isTyping = true;
         dialogueText.text = "";
         foreach (char letter in line.ToCharArray())
         {
             dialogueText.text += letter; // Add one letter at a time
             yield return new WaitForSeconds(0.01f); // Wait before showing the next letter
         }
+        isTyping = false;
     }
 }
