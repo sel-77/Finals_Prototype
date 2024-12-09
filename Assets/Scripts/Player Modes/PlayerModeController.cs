@@ -24,10 +24,9 @@ public class PlayerModeController : MonoBehaviour
         shooter = GetComponent<ShootMode>();
         interactor = GetComponent<InteractMode>();
 
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Confined;
-
-        originalScale = shootCrosshair.transform.localScale;
+        // Set initial cursor visibility based on the default mode
+        Cursor.visible = (currentMode == PlayerMode.Interact);
+        Cursor.lockState = (currentMode == PlayerMode.Interact) ? CursorLockMode.None : CursorLockMode.Confined;
 
         UpdateMode();
     }
@@ -71,6 +70,11 @@ public class PlayerModeController : MonoBehaviour
 
             interactCrosshair.SetActive(true);
             shootCrosshair.SetActive(false);
+
+            // Reset the cursor to the default interact cursor
+            Cursor.visible = true; // Ensure cursor is visible
+            Cursor.lockState = CursorLockMode.None; // Release lock if it was applied
+            interactor.ResetCursorToDefault();
         }
         else if (currentMode == PlayerMode.Shoot)
         {
@@ -79,6 +83,9 @@ public class PlayerModeController : MonoBehaviour
 
             interactCrosshair.SetActive(false);
             shootCrosshair.SetActive(true);
+
+            Cursor.visible = false; // Hide cursor in Shoot Mode
+            Cursor.lockState = CursorLockMode.Confined; // Optional: Lock cursor to the game window
         }
     }
 }
