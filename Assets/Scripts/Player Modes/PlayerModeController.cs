@@ -74,7 +74,7 @@ public class PlayerModeController : MonoBehaviour
             // Reset the cursor to the default interact cursor
             Cursor.visible = true; // Ensure cursor is visible
             Cursor.lockState = CursorLockMode.None; // Release lock if it was applied
-            interactor.ResetCursorToDefault();
+            if (interactor != null) interactor.ResetCursorToDefault();
         }
         else if (currentMode == PlayerMode.Shoot)
         {

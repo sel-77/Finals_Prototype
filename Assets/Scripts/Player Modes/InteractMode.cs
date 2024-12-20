@@ -5,11 +5,14 @@ using UnityEngine;
 public class InteractMode : MonoBehaviour
 {
     public LayerMask interactableLayer; // Layer for interactable objects
+    public LayerMask itemLayer; // Layer for item objects
     public Texture2D defaultCursor; // Default cursor sprite
     public Texture2D interactCursor; // Cursor sprite for interactables
+    public Texture2D itemCursor; // Cursor sprite for items
 
     private Camera mainCamera; // Camera to convert screen space to world space
     private bool isHoveringInteractable = false;
+    private bool isHoveringItem = false;
 
     void Start()
     {
@@ -35,12 +38,13 @@ public class InteractMode : MonoBehaviour
     {
         // Cast a ray from the mouse position to detect interactable objects
         Vector2 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, interactableLayer);
+        RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero, Mathf.Infinity, interactableLayer | itemLayer);
 
         if (hit.collider != null)
         {
             // Check if the hit object is interactable
             Interactable interactable = hit.collider.GetComponent<Interactable>();
+            Item item = hit.collider.GetComponent<Item>();
             if (interactable != null)
             {
                 if (!isHoveringInteractable)
@@ -51,12 +55,27 @@ public class InteractMode : MonoBehaviour
                 }
                 return;
             }
+            else if (item != null)
+            {
+                if (!isHoveringItem)
+                {
+                    Debug.Log("Hovering over item: " + hit.collider.name);
+                    SetCursor(itemCursor);
+                    isHoveringItem = true;
+                }
+                return;
+            }
+        }
+        // If no item is hovered, reset to the default cursor
+        if (isHoveringItem)
+        {
+            SetCursor(defaultCursor);
+            isHoveringItem = false;
         }
 
         // If no interactable is hovered, reset to the default cursor
         if (isHoveringInteractable)
         {
-            Debug.Log("No longer hovering over an interactable.");
             SetCursor(defaultCursor);
             isHoveringInteractable = false;
         }
