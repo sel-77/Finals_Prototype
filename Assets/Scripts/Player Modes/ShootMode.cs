@@ -10,6 +10,9 @@ public class ShootMode : MonoBehaviour
     public float crosshairExpandSize = 1.5f; // Scale multiplier for crosshair expansion
     public float crosshairShrinkSpeed = 5f; // Speed of crosshair shrinking back to normal
 
+    public float shootCooldown = 0.5f; // Time in seconds between shots (cooldown)
+    private float lastShootTime = 0f; // Time when the player last shot
+
     private Camera mainCamera; // Camera to convert screen space to world space
     private Vector3 originalCrosshairScale; // To store the original crosshair scale
     private bool isShooting = false; // To track if the player is currently shooting
@@ -28,11 +31,14 @@ public class ShootMode : MonoBehaviour
 
     void Update()
     {
-        // If left mouse button is pressed, check for shooting
-        if (Input.GetMouseButtonDown(0))
+        // Only allow shooting if the cooldown has passed
+        if (Time.time >= lastShootTime + shootCooldown)
         {
-            isShooting = true;
-            Shoot();
+            if (Input.GetMouseButtonDown(0)) // Left mouse button
+            {
+                isShooting = true;
+                Shoot();
+            }
         }
 
         // If left mouse button is released, stop shooting
@@ -62,6 +68,9 @@ public class ShootMode : MonoBehaviour
                 Debug.Log("Shot enemy: " + hit.collider.name);
             }
         }
+
+        // Record the time of the shot
+        lastShootTime = Time.time;
     }
 
     private void HandleCrosshairScaling()

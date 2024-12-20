@@ -27,6 +27,9 @@ public class EnemySpawner : MonoBehaviour
         Transform spawnPoint = spawnPoints[Random.Range(0, spawnPoints.Length)];
 
         // Instantiate the enemy at the chosen spawn point
-        Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+        GameObject enemy = Instantiate(enemyPrefab, spawnPoint.position, Quaternion.identity);
+
+        // Set the parent of the spawned enemy to the current location GameObject
+        enemy.transform.SetParent(transform);
     }
 }

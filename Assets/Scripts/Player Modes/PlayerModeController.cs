@@ -13,21 +13,14 @@ public class PlayerModeController : MonoBehaviour
     public GameObject shootCrosshair;
     public Transform crosshairTransform;
 
+    public GameObject armWithGun; // Reference to the arm with gun object
+    public Camera mainCamera; // Reference to the main camera
+
     private ShootMode shooter;
     private InteractMode interactor;
 
-    private Vector3 originalScale; // Store the original scale of the crosshair
-    private bool isShooting = false; // Prevent overlapping animations
-
     void Start()
     {
-        shooter = GetComponent<ShootMode>();
-        interactor = GetComponent<InteractMode>();
-
-        // Set initial cursor visibility based on the default mode
-        Cursor.visible = (currentMode == PlayerMode.Interact);
-        Cursor.lockState = (currentMode == PlayerMode.Interact) ? CursorLockMode.None : CursorLockMode.Confined;
-
         UpdateMode();
     }
 
@@ -55,12 +48,6 @@ public class PlayerModeController : MonoBehaviour
         UpdateMode();
     }
 
-    public void SetMode(PlayerMode mode)
-    {
-        currentMode = mode;
-        UpdateMode();
-    }
-
     private void UpdateMode()
     {
         if (currentMode == PlayerMode.Interact)
@@ -71,9 +58,10 @@ public class PlayerModeController : MonoBehaviour
             interactCrosshair.SetActive(true);
             shootCrosshair.SetActive(false);
 
-            // Reset the cursor to the default interact cursor
-            Cursor.visible = true; // Ensure cursor is visible
-            Cursor.lockState = CursorLockMode.None; // Release lock if it was applied
+            armWithGun.SetActive(false);
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             if (interactor != null) interactor.ResetCursorToDefault();
         }
         else if (currentMode == PlayerMode.Shoot)
@@ -84,8 +72,10 @@ public class PlayerModeController : MonoBehaviour
             interactCrosshair.SetActive(false);
             shootCrosshair.SetActive(true);
 
-            Cursor.visible = false; // Hide cursor in Shoot Mode
-            Cursor.lockState = CursorLockMode.Confined; // Optional: Lock cursor to the game window
+            armWithGun.SetActive(true);
+
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Confined;
         }
     }
 }

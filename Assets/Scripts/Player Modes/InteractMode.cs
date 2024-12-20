@@ -49,7 +49,6 @@ public class InteractMode : MonoBehaviour
             {
                 if (!isHoveringInteractable)
                 {
-                    Debug.Log("Hovering over interactable: " + hit.collider.name);
                     SetCursor(interactCursor);
                     isHoveringInteractable = true;
                 }
@@ -59,7 +58,6 @@ public class InteractMode : MonoBehaviour
             {
                 if (!isHoveringItem)
                 {
-                    Debug.Log("Hovering over item: " + hit.collider.name);
                     SetCursor(itemCursor);
                     isHoveringItem = true;
                 }
@@ -95,7 +93,6 @@ public class InteractMode : MonoBehaviour
             {
                 // Call the interaction method
                 interactable.OnInteract();
-                Debug.Log("Interacted with: " + hit.collider.name);
             }
         }
     }
