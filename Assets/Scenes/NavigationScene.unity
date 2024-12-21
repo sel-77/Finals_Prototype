@@ -1225,7 +1225,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &869883081
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2675,7 +2675,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1703541541
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3886,7 +3886,7 @@ PrefabInstance:
     - target: {fileID: 2908074909481719025, guid: db40f0a4b36ca424abd9c09db107abb4, type: 3}
       propertyPath: requiredItemPrefab
       value: 
-      objectReference: {fileID: 2101897769}
+      objectReference: {fileID: 8406614132952559023, guid: 5c1e21e64ae261d4a84dc556398d9a3d, type: 3}
     - target: {fileID: 4106667934305800527, guid: db40f0a4b36ca424abd9c09db107abb4, type: 3}
       propertyPath: m_Name
       value: interactable
@@ -4300,11 +4300,6 @@ MonoBehaviour:
   - {fileID: 1936019609}
   - {fileID: 1658763650}
   itemSOs: []
---- !u!1 &2101897769 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8406614132952559023, guid: 5c1e21e64ae261d4a84dc556398d9a3d, type: 3}
-  m_PrefabInstance: {fileID: 8899184052059156949}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2101897773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9157586524755598914, guid: 5c1e21e64ae261d4a84dc556398d9a3d, type: 3}
@@ -4526,7 +4521,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8406614132952559023, guid: 5c1e21e64ae261d4a84dc556398d9a3d, type: 3}
       propertyPath: m_Name
-      value: SafeCode
+      value: Paper with Code
       objectReference: {fileID: 0}
     - target: {fileID: 9157586524755598914, guid: 5c1e21e64ae261d4a84dc556398d9a3d, type: 3}
       propertyPath: m_LocalPosition.x
