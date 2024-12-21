@@ -12,11 +12,15 @@ public class Item : MonoBehaviour
 
     [SerializeField]
     private Sprite sprite;
+    
     [TextArea]
     [SerializeField]
     private string itemDescription;
 
     private InventoryManager inventoryManager;
+
+    // Public property to access itemName
+    public string ItemName => itemName; // Use this property to access itemName
 
     void Start()
     {
@@ -27,7 +31,7 @@ public class Item : MonoBehaviour
     {
         int leftOverItems = inventoryManager.AddItem(itemName, quantity, sprite, itemDescription);
         if(leftOverItems <= 0)
-            Destroy(gameObject); 
+            gameObject.GetComponent<Renderer>().enabled = false;
         else
             quantity = leftOverItems;
     }

@@ -13,6 +13,7 @@ public class InteractMode : MonoBehaviour
     private Camera mainCamera; // Camera to convert screen space to world space
     private bool isHoveringInteractable = false;
     private bool isHoveringItem = false;
+    private Item heldItem = null; // Reference to the currently held item
 
     void Start()
     {
@@ -56,6 +57,7 @@ public class InteractMode : MonoBehaviour
             }
             else if (item != null)
             {
+                heldItem = item;  // Assign the hovered item to the heldItem variable
                 if (!isHoveringItem)
                 {
                     SetCursor(itemCursor);
@@ -91,8 +93,8 @@ public class InteractMode : MonoBehaviour
             Interactable interactable = hit.collider.GetComponent<Interactable>();
             if (interactable != null)
             {
-                // Call the interaction method
-                interactable.OnInteract();
+                // Only interact if the item is compatible
+                interactable.OnInteract(heldItem);  // Pass the heldItem to the OnInteract method
             }
         }
     }

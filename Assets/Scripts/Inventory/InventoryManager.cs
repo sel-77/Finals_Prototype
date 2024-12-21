@@ -7,8 +7,20 @@ public class InventoryManager : MonoBehaviour
     public GameObject InventoryMenu;
     private bool menuActivated;
     public ItemSlot[] itemSlot;
-
     public ItemSO[] itemSOs;
+
+    // Add a method to check if an item is in the inventory
+    public bool HasItemInInventory(string itemName)
+    {
+        foreach (var slot in itemSlot)
+        {
+            if (slot.itemName == itemName && slot.quantity > 0) // Check if item exists and is not empty
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 
     void Update()
     {
@@ -18,7 +30,6 @@ public class InventoryManager : MonoBehaviour
             InventoryMenu.SetActive(false);
             menuActivated = false;
         }
-
         else if (Input.GetKeyDown(KeyCode.B) && !menuActivated)
         {
             Time.timeScale = 0;
@@ -50,7 +61,6 @@ public class InventoryManager : MonoBehaviour
                     
                 return leftOverItems;
             }
-            
         }
         return quantity;
     }
